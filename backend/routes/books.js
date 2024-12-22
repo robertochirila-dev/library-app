@@ -8,6 +8,25 @@ router.get("/", async (req, res) => {
     res.json(books);
 });
 
+// Get specific book
+router.get('/:id', async (req, res) => {
+    try {
+      const bookId = req.params.id;  // Extract the book ID from the URL
+      console.log(`Fetching book with ID: ${bookId}`);  // Debugging point
+  
+      // Attempt to find the book in the database by its ID
+      const book = await Book.findById(bookId);
+      if (!book) {
+        return res.status(404).json({ message: 'Book not found' });
+      }
+  
+      res.json(book);  // Return the book details as a JSON response
+    } catch (err) {
+      console.error("Error fetching book:", err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
 // Add a new book
 router.post('/', async (req, res) => {
     const { title, author, year, genre } = req.body;
