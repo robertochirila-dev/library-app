@@ -1,35 +1,57 @@
 <template>
-    <div class="p-4">
-        <h2 class="text-xl font-bold mb-4">Book Details</h2>
-        <div v-if="book">
-            <h3>{{ book.title }}</h3>
-            <p><strong>Author:</strong> {{ book.author }}</p>
-            <p><strong>Description:</strong> {{ book.description }}</p>
-            <div v-if="isAdmin">
-                <div v-if="book.available">
-                    <label for="reader-select">Assign to Reader:</label>
-                    <select v-model="selectedReaderId" id="reader-select" class="p-2 border rounded">
-                        <option v-for="reader in readers" :key="reader._id" :value="reader._id">
-                            {{ reader.name }}
-                        </option>
-                    </select>
-
-                    <button @click="assignBook" class="bg-blue-500 text-white px-4 py-2 rounded"
-                        :disabled="isAssigning || !selectedReaderId">
-                        Assign Book
-                    </button>
-                </div>
-                <p v-else>This book has already been borrowed.</p>
-            </div>
-            <div v-else>
-                <p>You are not signed in as an admin !</p>
-            </div>
+    <div class="p-6 bg-gray-50 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Book Details</h2>
+      
+      <div v-if="book" class="space-y-4">
+        <!-- Book Title -->
+        <h3 class="text-xl font-semibold text-gray-900">{{ book.title }}</h3>
+        
+        <!-- Author -->
+        <p class="text-lg text-gray-700"><strong>Author:</strong> {{ book.author }}</p>
+        
+        <!-- Description -->
+        <p class="text-sm text-gray-600"><strong>Description:</strong> {{ book.description }}</p>
+  
+        <!-- Admin Actions -->
+        <div v-if="isAdmin" class="mt-4 space-y-4">
+          <!-- Book Availability Check -->
+          <div v-if="book.available" class="space-y-2">
+            <label for="reader-select" class="block text-sm font-medium text-gray-700">Assign to Reader:</label>
+            
+            <!-- Reader Selection Dropdown -->
+            <select v-model="selectedReaderId" id="reader-select" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <option v-for="reader in readers" :key="reader._id" :value="reader._id">
+                {{ reader.name }}
+              </option>
+            </select>
+  
+            <!-- Assign Button -->
+            <button 
+              @click="assignBook" 
+              class="mt-3 bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              :disabled="isAssigning || !selectedReaderId">
+              Assign Book
+            </button>
+          </div>
+          
+          <!-- Message when the book is already borrowed -->
+          <div v-else>
+            <p class="text-sm text-gray-500">This book has already been borrowed.</p>
+          </div>
         </div>
+        
+        <!-- If user is not admin -->
         <div v-else>
-            <p>Loading...</p>
+          <p class="text-sm text-gray-500">You are not signed in as an admin!</p>
         </div>
+      </div>
+      
+      <!-- Loading State -->
+      <div v-else>
+        <p class="text-sm text-gray-500">Loading...</p>
+      </div>
     </div>
-</template>
+  </template>
 
 <script>
 export default {

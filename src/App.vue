@@ -1,21 +1,5 @@
 <template>
   <div id="app">
-    <!-- Navigation -->
-    <nav class="bg-blue-500 p-4">
-      <ul class="flex space-x-4">
-        <li>
-          <router-link to="/" class="text-white">Home</router-link>
-        </li>
-        <li>
-          <router-link to="/books" class="text-white">Books</router-link>
-        </li>
-        <li>
-          <router-link to="/readers" class="text-white">Readers</router-link>
-        </li>
-      </ul>
-    </nav>
-
-    <!-- The router-view will display the matched component -->
     <router-view></router-view>
   </div>
 </template>
@@ -24,9 +8,35 @@
 
 export default {
   name: 'App',
+  data() {
+    return {
+      isLoggedIn: false
+    }
+  },
+  created() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      // If token exists, redirect to the books page
+      this.$router.push('/books');
+    } else {
+      // If no token, redirect to the registration page
+      this.$router.push('/');
+    }
+  },
+  methods: {
+    signOut() {
+      // Remove the token and role from localStorage
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      this.$router.push('/login'); // Adjust based on your routes
+      this.user = null;
+    }
+  }
+
+
+
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -1,13 +1,23 @@
 <template>
-  <div class="p-4">
-    <h2 class="text-xl font-bold mb-4">Reader Details</h2>
-    <div v-if="reader">
-      <h3>{{ reader.name }}</h3>
-      <p><strong>Email:</strong> {{ reader.email }}</p>
-      <p><strong>Books Taken:</strong> {{ reader.booksTaken.join(", ") }}</p>
+  <div class="p-6 bg-gray-50 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Reader Details</h2>
+
+    <div v-if="reader" class="space-y-4">
+      <!-- Reader Name -->
+      <h3 class="text-xl font-semibold text-gray-900">{{ reader.name }}</h3>
+
+      <!-- Reader Email -->
+      <p class="text-lg text-gray-700"><strong>Email:</strong> {{ reader.email }}</p>
+
+      <!-- Books Taken -->
+      <p class="text-sm text-gray-600">
+        <strong>Books Taken:</strong> {{ reader.booksTaken.join(", ") }}
+      </p>
     </div>
+
+    <!-- Loading State -->
     <div v-else>
-      <p>Loading...</p>
+      <p class="text-sm text-gray-500">Loading...</p>
     </div>
   </div>
 </template>

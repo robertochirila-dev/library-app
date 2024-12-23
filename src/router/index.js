@@ -13,6 +13,10 @@ const routes = [
     { path: "/readers", name: "Readers", component: ReadersList },
     { path: "/books/:id", name: "BookDetails", component: BookDetails, props: true },
     { path: "/readers/:id", name: "ReaderDetails", component: ReaderDetails, props: true },
+    {
+        path: '/:catchAll(.*)',
+        redirect: '/login',
+    }
 ];
 
 const router = createRouter({
