@@ -21,7 +21,8 @@ mongoose.connect(uri, {
 // Routes
 app.use("/books", require("./routes/books"));
 app.use("/readers", require("./routes/readers"));
-app.use("/loans", require("./routes/loans"));
+app.use("/borrow", require("./routes/loans"));
+
 
 // Start server
 const PORT = 3000;

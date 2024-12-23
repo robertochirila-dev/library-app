@@ -4,7 +4,7 @@ const Book = require("../models/Book");
 
 // Get all books
 router.get("/", async (req, res) => {
-    const books = await Book.find().populate("loanedTo");
+    const books = await Book.find();
     res.json(books);
 });
 
@@ -43,5 +43,7 @@ router.post('/', async (req, res) => {
         res.status(500).json({ error: 'Failed to add book' });
     }
 });
+
+
 
 module.exports = router;
