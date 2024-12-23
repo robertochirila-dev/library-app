@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const authMiddleware = (role = "reader") => {
+const authMiddleware = (role) => {
   return (req, res, next) => {
     const token = req.header("Authorization")?.replace("Bearer ", "");
     

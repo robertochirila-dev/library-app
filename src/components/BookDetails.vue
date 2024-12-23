@@ -41,14 +41,15 @@ export default {
             isAssigning: false,
             readers: [],
             selectedReaderId: null,
-            isAdmin: false
+            isAdmin: false,
+            token: null
         };
     },
     created() {
         this.fetchBookDetails(this.id); // Use `this.id` to fetch the details
         this.fetchReaders(this.selectedReaderId)
         const role = localStorage.getItem("role");
-        console.log(role)
+        this.token = localStorage.getItem("authToken")
         this.isAdmin = role === "admin"; // Check if the user is an admin
     },
     methods: {
@@ -77,6 +78,7 @@ export default {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${this.token}`,
                     },
                     body: JSON.stringify({ readerId }),
                 });
