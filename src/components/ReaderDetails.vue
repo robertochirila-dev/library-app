@@ -1,62 +1,45 @@
 <template>
+  <div class="p-4">
+    <h2 class="text-xl font-bold mb-4">Reader Details</h2>
     <div v-if="reader">
-      <h2>Reader Details</h2>
-      <div>
-        <strong>Name:</strong> {{ reader.name }}
-      </div>
-      <div>
-        <strong>Email:</strong> {{ reader.email }}
-      </div>
-      <div>
-        <strong>Books Taken:</strong>
-        <ul>
-          <li v-for="book in reader.booksTaken" :key="book._id">{{ book.title }}</li>
-        </ul>
-      </div>
-      <div>
-        <strong>Created At:</strong> {{ reader.createdAt }}
-      </div>
+      <h3>{{ reader.name }}</h3>
+      <p><strong>Email:</strong> {{ reader.email }}</p>
+      <p><strong>Books Taken:</strong> {{ reader.booksTaken.join(", ") }}</p>
     </div>
     <div v-else>
       <p>Loading...</p>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    props: {
-      readerId: {
-        type: String,
-        required: true,
-      }
-    },
-    data() {
-      return {
-        reader: null
-      };
-    },
-    watch: {
-      readerId: 'fetchReaderDetails',
-    },
-    mounted() {
-      this.fetchReaderDetails();
-    },
-    methods: {
-      async fetchReaderDetails() {
-        try {
-          const response = await fetch(`http://localhost:3000/readers/${this.readerId}`);
-          if (!response.ok) {
-            throw new Error('Reader not found');
-          }
-          const data = await response.json();
-          this.reader = data;
-        } catch (error) {
-          console.error(error);
+  </div>
+</template>
+
+<script>
+export default {
+  name: "ReaderDetails",
+  props: ['id'], // Automatically receive the `id` prop from the router
+  data() {
+    return {
+      reader: null
+    };
+  },
+  created() {
+    this.fetchReaderDetails(this.id);
+  },
+  methods: {
+    async fetchReaderDetails(readerId) {
+      try {
+        const response = await fetch(`http://localhost:3000/readers/${readerId}`);
+        if (response.ok) {
+          this.reader = await response.json();
+        } else {
+          console.error("Failed to fetch reader details");
         }
+      } catch (error) {
+        console.error("Error fetching reader details:", error);
       }
     }
-  };
-  </script>
+  }
+};
+</script>
   
   <style scoped>
   /* Add any specific styling you want here */

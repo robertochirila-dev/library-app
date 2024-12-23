@@ -1,37 +1,32 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <div>
-    <div class="flex justify-between mb-4">
-      <button @click="showBooks = true" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-        Show Books
-      </button>
-      <button @click="showBooks = false" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-        Show Readers
-      </button>
-    </div>
-    <BookList v-if="showBooks"></BookList>
-    <ReaderList v-else></ReaderList>
+  <div id="app">
+    <!-- Navigation -->
+    <nav class="bg-blue-500 p-4">
+      <ul class="flex space-x-4">
+        <li>
+          <router-link to="/" class="text-white">Home</router-link>
+        </li>
+        <li>
+          <router-link to="/books" class="text-white">Books</router-link>
+        </li>
+        <li>
+          <router-link to="/readers" class="text-white">Readers</router-link>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- The router-view will display the matched component -->
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import BookList from './components/BookList.vue'
-import ReaderList from './components/ReaderList.vue'
-
 
 export default {
   name: 'App',
-  components: {
-    BookList,
-    ReaderList
-  },
-  data() {
-    return {
-      showBooks: false,
-    }
-  }
 }
 </script>
 
 <style>
+
 </style>

@@ -1,55 +1,43 @@
 <template>
-    <div v-if="book">
-        <h2>{{ book.title }}</h2>
+    <div class="p-4">
+      <h2 class="text-xl font-bold mb-4">Book Details</h2>
+      <div v-if="book">
+        <h3>{{ book.title }}</h3>
         <p><strong>Author:</strong> {{ book.author }}</p>
         <p><strong>Description:</strong> {{ book.description }}</p>
-        <p><strong>Published Date:</strong> {{ book.publishedDate }}</p>
-        <!-- Display other details -->
+        <!-- Add more fields as needed -->
+      </div>
+      <div v-else>
+        <p>Loading...</p>
+      </div>
     </div>
-</template>
-
-<script>
-export default {
-    name: 'BookDetails',
-    props: ['bookId'],
+  </template>
+  
+  <script>
+  export default {
+    name: "BookDetails",
+    props: ['id'], // The `id` will be passed as a prop from the router
     data() {
-        return {
-            book: null,
-        };
-    },
-    watch: {
-        bookId(newBookId) {
-            this.fetchBookDetails(newBookId);
-        }
-    },
-    methods: {
-        async fetchBookDetails(bookId) {
-            try {
-
-                // Fetch book details from the API based on bookId
-                const response = await fetch(`http://localhost:3000/books/${bookId}`);
-
-                console.log(response)
-
-                // Check if the response is OK (status 200)
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch book details: ${response.status}`);
-                }
-
-                // Parse the JSON response
-                const bookData = await response.json();
-                this.book = bookData; // Set the data to your book variable
-                console.log("Fetched Book:", bookData); // Debugging point
-            } catch (error) {
-                console.error("Error fetching book details:", error);
-            }
-        }
+      return {
+        book: null
+      };
     },
     created() {
-        console.log('rendered')
-        if (this.bookId) {
-            this.fetchBookDetails(this.bookId);
-        }
+      this.fetchBookDetails(this.id); // Use `this.id` to fetch the details
     },
-};
-</script>
+    methods: {
+      async fetchBookDetails(bookId) {
+        try {
+          const response = await fetch(`http://localhost:3000/books/${bookId}`);
+          if (response.ok) {
+            this.book = await response.json(); // Store the data in `book`
+          } else {
+            console.error("Failed to fetch book details");
+          }
+        } catch (error) {
+          console.error("Error fetching book details:", error);
+        }
+      }
+    }
+  };
+  </script>

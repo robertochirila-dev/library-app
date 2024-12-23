@@ -18,32 +18,27 @@
                     <td class="py-2 px-4 border-b">{{ reader.phone }}</td>
                     <td class="py-2 px-4 border-b">
                         <ul>
-                            <li v-for="book in reader.booksTaken" :key="book">{{book}}</li>
+                            <li v-for="book in reader.booksTaken" :key="book">{{ book }}</li>
                         </ul>
                     </td>
                     <td class="py-2 px-4 border-b">{{ reader.membershipDate }}</td>
                     <td class="border p-2">
-                        <button @click="viewDetails(reader._id)"
-                            class="bg-blue-500 text-white px-4 py-2 rounded">Details</button>
+                        <router-link :to="`/readers/${reader._id}`" class="bg-blue-500 text-white px-4 py-2 rounded">
+                            Details
+                        </router-link>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <ReaderDetails v-if="selectedReaderId" :readerId="selectedReaderId" />
     </div>
 </template>
 
 <script>
-import ReaderDetails from './ReaderDetails.vue';
 export default {
-    name: 'ReaderList',
-    components:{
-        ReaderDetails
-    },
+    name: 'ReadersList',
     data() {
         return {
             readers: [],
-            selectedReaderId: null
         }
     },
     mounted() {
@@ -55,9 +50,6 @@ export default {
             const data = await response.json();
             this.readers = data;
             return ''
-        },
-        viewDetails(readerId) {
-            this.selectedReaderId = readerId;
         },
     }
 }

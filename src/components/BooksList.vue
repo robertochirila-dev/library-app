@@ -14,30 +14,26 @@
           <td class="border p-2">{{ book.title }}</td>
           <td class="border p-2">{{ book.author }}</td>
           <td class="border p-2">
-            <button @click="viewDetails(book._id)" class="bg-blue-500 text-white px-4 py-2 rounded">Details</button>
+            <router-link
+              :to="`/books/${book._id}`"
+              class="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              Details
+            </router-link>
           </td>
         </tr>
       </tbody>
     </table>
-    <BookDetails v-if="selectedBookId" :bookId="selectedBookId" />
   </div>
 </template>
 
 <script>
-import BookDetails from "./BookDetails.vue"
 export default {
-  name: 'BookList',
-  components: {
-    BookDetails
-  },
+  name: 'BooksList',
   data() {
     return {
       books: [],
-      selectedBookId: null
     }
-  },
-  props: {
-    msg: String
   },
   mounted() {
     this.fetchBooks();
@@ -47,9 +43,6 @@ export default {
       const response = await fetch('http://localhost:3000/books');
       const data = await response.json();
       this.books = data;
-    },
-    viewDetails(bookId) {
-      this.selectedBookId = bookId;
     }
   }
 }
