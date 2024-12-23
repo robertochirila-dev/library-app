@@ -2,7 +2,7 @@
 
 ## Project setup
 ```
-npm install
+npm install in the parent directory
 ```
 
 ### Compiles and hot-reloads for development
@@ -15,9 +15,14 @@ npm run serve
 npm run build
 ```
 
-### Lints and fixes files
+### npm install dependencies inside backend
 ```
-npm run lint
+npm install
+```
+
+### npm start the server
+```
+npm run dev
 ```
 
 ### Customize configuration
