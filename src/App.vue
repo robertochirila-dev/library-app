@@ -1,26 +1,48 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <NavigationBar v-if="isLoggedIn" />
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import NavigationBar from './components/NavigationBar.vue';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  components:{
+    NavigationBar
+  },
+  data() {
+    return {
+      isLoggedIn: false
+    }
+  },
+  created() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      // If token exists, redirect to the books page
+      this.$router.push('/books');
+    } else {
+      // If no token, redirect to the registration page
+      this.$router.push('/');
+    }
+  },
+  methods: {
+    signOut() {
+      // Remove the token and role from localStorage
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      this.$router.push('/login'); // Adjust based on your routes
+      this.user = null;
+    }
   }
+
+
+
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>

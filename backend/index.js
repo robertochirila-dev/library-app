@@ -1,15 +1,31 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const mongoose = require("mongoose")
+const authRoutes = require("./routes/auth");
+
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+
+const uri = "mongodb://127.0.0.1:27017/library"; // Replace 'library' with your database name
+mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+}).then(() => {
+    console.log("Connected to MongoDB");
+}).catch((err) => {
+    console.error("MongoDB connection error:", err);
+});
+
 // Routes
 app.use("/books", require("./routes/books"));
 app.use("/readers", require("./routes/readers"));
-app.use("/loans", require("./routes/loans"));
+app.use("/borrow", require("./routes/loans"), authRoutes);
+app.use("/auth", authRoutes)
+
 
 // Start server
 const PORT = 3000;
