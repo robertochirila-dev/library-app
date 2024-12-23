@@ -49,7 +49,6 @@ export default {
       this.books = data;
     },
     viewDetails(bookId) {
-      console.log(bookId)
       this.selectedBookId = bookId;
     }
   }
