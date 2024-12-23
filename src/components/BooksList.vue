@@ -1,4 +1,5 @@
 <template>
+  <NavigationBar/>
   <div class="p-4">
     <h2 class="text-xl font-bold mb-4">Books</h2>
     <table class="min-w-full border-collapse border border-gray-200">
@@ -28,8 +29,12 @@
 </template>
 
 <script>
+import NavigationBar from './NavigationBar.vue';
 export default {
   name: 'BooksList',
+  components:{
+    NavigationBar
+  },
   data() {
     return {
       books: [],

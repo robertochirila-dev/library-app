@@ -22,7 +22,7 @@
       </form>
       <p class="mt-4 text-center text-sm text-gray-600">
         Don't have an account?
-        <router-link to="/register" class="text-indigo-600 hover:text-indigo-800">Register here</router-link>
+        <router-link to="/" class="text-indigo-600 hover:text-indigo-800">Register here</router-link>
       </p>
     </div>
   </div>

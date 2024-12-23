@@ -1,5 +1,6 @@
 <template>
     <div class="p-6 bg-gray-50 rounded-lg shadow-md">
+    <NavigationBar />
       <h2 class="text-2xl font-bold text-gray-800 mb-4">Book Details</h2>
       
       <div v-if="book" class="space-y-4">
@@ -54,8 +55,12 @@
   </template>
 
 <script>
+import NavigationBar from './NavigationBar.vue';
 export default {
     name: "BookDetails",
+    components:{
+        NavigationBar
+    },
     props: ['id'], // The `id` will be passed as a prop from the router
     data() {
         return {

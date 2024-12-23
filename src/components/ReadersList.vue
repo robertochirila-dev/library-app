@@ -1,5 +1,6 @@
 <template>
     <div class="p-6 bg-gray-50 rounded-lg shadow-md">
+        <NavigationBar/>
       <h2 class="text-2xl font-bold text-gray-800 mb-6">Reader List</h2>
       <table class="min-w-full bg-white border border-gray-200 rounded-lg">
         <thead class="bg-gray-100">
@@ -39,8 +40,13 @@
   </template>
 
 <script>
+import NavigationBar from './NavigationBar.vue';
+
 export default {
     name: 'ReadersList',
+    components: {
+        NavigationBar
+    },
     data() {
         return {
             readers: [],
