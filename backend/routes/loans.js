@@ -2,10 +2,12 @@ const express = require("express");
 const router = express.Router();
 const Book = require("../models/Book");
 const Reader =  require("../models/Reader")
+const authMiddleware = require("../middleware/authMiddleware");
+
 
 // Loan a book to a reader
 // Assuming we have a Book and Reader model
-router.post('/:bookId', async (req, res) => {
+router.post('/:bookId', authMiddleware("admin"), async (req, res) => {
   const { bookId } = req.params;
   const { readerId } = req.body; // assuming you send the readerId in the request body
 

@@ -5,20 +5,25 @@
             <h3>{{ book.title }}</h3>
             <p><strong>Author:</strong> {{ book.author }}</p>
             <p><strong>Description:</strong> {{ book.description }}</p>
-            <div v-if="book.available">
-                <label for="reader-select">Assign to Reader:</label>
-                <select v-model="selectedReaderId" id="reader-select" class="p-2 border rounded">
-                    <option v-for="reader in readers" :key="reader._id" :value="reader._id">
-                        {{ reader.name }}
-                    </option>
-                </select>
+            <div v-if="isAdmin">
+                <div v-if="book.available">
+                    <label for="reader-select">Assign to Reader:</label>
+                    <select v-model="selectedReaderId" id="reader-select" class="p-2 border rounded">
+                        <option v-for="reader in readers" :key="reader._id" :value="reader._id">
+                            {{ reader.name }}
+                        </option>
+                    </select>
 
-                <button @click="assignBook" class="bg-blue-500 text-white px-4 py-2 rounded"
-                    :disabled="isAssigning || !selectedReaderId">
-                    Assign Book
-                </button>
+                    <button @click="assignBook" class="bg-blue-500 text-white px-4 py-2 rounded"
+                        :disabled="isAssigning || !selectedReaderId">
+                        Assign Book
+                    </button>
+                </div>
+                <p v-else>This book has already been borrowed.</p>
             </div>
-            <p v-else>This book has already been borrowed.</p>
+            <div v-else>
+                <p>You are not signed in as an admin !</p>
+            </div>
         </div>
         <div v-else>
             <p>Loading...</p>
@@ -35,12 +40,16 @@ export default {
             book: null,
             isAssigning: false,
             readers: [],
-            selectedReaderId: null
+            selectedReaderId: null,
+            isAdmin: false
         };
     },
     created() {
         this.fetchBookDetails(this.id); // Use `this.id` to fetch the details
         this.fetchReaders(this.selectedReaderId)
+        const role = localStorage.getItem("role");
+        console.log(role)
+        this.isAdmin = role === "admin"; // Check if the user is an admin
     },
     methods: {
         async fetchBookDetails(bookId) {

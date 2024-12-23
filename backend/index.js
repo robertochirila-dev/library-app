@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose")
+const authRoutes = require("./routes/auth");
+
 
 const app = express();
 app.use(cors());
@@ -21,7 +23,8 @@ mongoose.connect(uri, {
 // Routes
 app.use("/books", require("./routes/books"));
 app.use("/readers", require("./routes/readers"));
-app.use("/borrow", require("./routes/loans"));
+app.use("/borrow", require("./routes/loans"), authRoutes);
+app.use("/auth", authRoutes)
 
 
 // Start server
