@@ -1,6 +1,7 @@
 <template>
+      <NavigationBar />
+
   <div class="p-6 bg-gray-50 rounded-lg shadow-md">
-    <NavigationBar/>
 
     <h2 class="text-2xl font-bold text-gray-800 mb-4">Reader Details</h2>
 
@@ -13,7 +14,12 @@
 
       <!-- Books Taken -->
       <p class="text-sm text-gray-600">
-        <strong>Books Taken:</strong> {{ reader.booksTaken.join(", ") }}
+        <strong>Books Taken:</strong>
+        <ul class="list-disc pl-5">
+          <li v-for="book in reader.booksTaken" :key="book.bookId">
+            {{ book.title }}
+          </li>
+        </ul>
       </p>
     </div>
 

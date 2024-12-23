@@ -30,7 +30,8 @@ router.post('/:bookId', authMiddleware("admin"), async (req, res) => {
     await book.save();
 
     // Update the Reader document (Add book to booksTaken)
-    reader.booksTaken.push(book._id);
+    console.log(book)
+    reader.booksTaken.push({ bookId: book._id, title: book.title });
     await reader.save();
 
     res.status(200).send('Book successfully assigned to the reader');
