@@ -22,10 +22,14 @@ router.post('/:bookId', async (req, res) => {
       return res.status(400).send('Book is not available');
     }
 
-    // Mark the book as borrowed and assign it to the reader
-    book.available = false; // Book is now unavailable
-    book.borrowedBy = reader._id; // Assign book to the reader
+    // Update the Book document
+    book.available = false; // Book is no longer available
+    book.borrowedBy = reader._id; // Assign book to reader
     await book.save();
+
+    // Update the Reader document (Add book to booksTaken)
+    reader.booksTaken.push(book._id);
+    await reader.save();
 
     res.status(200).send('Book successfully assigned to the reader');
   } catch (error) {
