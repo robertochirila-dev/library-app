@@ -5,11 +5,13 @@ import BookDetails from "../components/BookDetails.vue";
 import ReaderDetails from "../components/ReaderDetails.vue";
 import LoginForm from "../components/LoginForm.vue"
 import SignUpForm from "../components/SignUpForm.vue"
+import AddBook from "@/components/AddBook.vue";
 
 const routes = [
     { path: "/", name: "SignUpForm", component: SignUpForm },
     { path: "/login", name: "LoginForm", component: LoginForm },
     { path: "/books", name: "Books", component: BooksList },
+    { path: "/add-book", name: "AddBook", component: AddBook },
     { path: "/readers", name: "Readers", component: ReadersList },
     { path: "/books/:id", name: "BookDetails", component: BookDetails, props: true },
     { path: "/readers/:id", name: "ReaderDetails", component: ReaderDetails, props: true },

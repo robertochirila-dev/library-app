@@ -7,6 +7,15 @@ from bson import ObjectId
 # Initialize the Flask app
 app = Flask(__name__)
 
+from flask_cors import CORS  # Import CORS
+
+app = Flask(__name__)
+
+# Enable CORS for all routes
+CORS(app)
+
+
+
 # Connect to MongoDB
 client = MongoClient('mongodb://localhost:27017')  # Adjust the URI if necessary
 db = client['library']  # Replace with your actual database name

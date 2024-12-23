@@ -6,6 +6,10 @@
       </div>
       <div class="space-x-4">
         <router-link 
+          to="/add-book" 
+          class="text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
+          >Add book</router-link>
+        <router-link 
           to="/books" 
           class="text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
           >Books</router-link>
