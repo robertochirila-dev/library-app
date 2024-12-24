@@ -11,9 +11,7 @@ router.get("/", async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-      const readerId = req.params.id;  // Extract the book ID from the URL
-      console.log(`Fetching reader with ID: ${readerId}`);  // Debugging point
-  
+      const readerId = req.params.id;  // Extract the book ID from the URL  
       // Attempt to find the book in the database by its ID
       const reader = await Reader.findById(readerId);
       if (!reader) {
@@ -31,7 +29,6 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
       const { name, email, phone, membershipDate, booksTaken } = req.body;
-      console.log(name, email, phone)
   
       // Convert book IDs from string to ObjectId
       const booksObjectIds = booksTaken.map(bookId => new mongoose.Types.ObjectId(bookId));
