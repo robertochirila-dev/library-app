@@ -62,7 +62,6 @@ export default {
 
           // Decode the token to get the role
           const decodedToken = jwtDecode(data.token);
-          console.log(decodedToken)
           localStorage.setItem("role", decodedToken.role); // Store role in localStorage
 
           this.$router.push("/books"); // Redirect to dashboard

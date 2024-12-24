@@ -13,7 +13,6 @@ router.get("/", async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
       const bookId = req.params.id;  // Extract the book ID from the URL
-      console.log(`Fetching book with ID: ${bookId}`);  // Debugging point
   
       // Attempt to find the book in the database by its ID
       const book = await Book.findById(bookId);
