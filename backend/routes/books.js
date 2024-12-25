@@ -9,6 +9,24 @@ router.get("/", async (req, res) => {
     res.json(books);
 });
 
+// Delete a book
+router.delete('/:id', async (req, res) => {
+    try {
+        const bookId = req.params.id;
+        const deletedBook = await Book.findByIdAndDelete(bookId);
+        
+        if (!deletedBook) {
+            return res.status(404).json({ message: 'Book not found' });
+        }
+        
+        res.json({ message: 'Book deleted successfully', book: deletedBook });
+    } catch (err) {
+        console.error("Error deleting book:", err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+
 // Get specific book
 router.get('/:id', async (req, res) => {
     try {
