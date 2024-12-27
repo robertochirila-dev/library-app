@@ -1,25 +1,56 @@
 const jwt = require("jsonwebtoken");
 
-const authMiddleware = (role) => {
+const authMiddleware = (roles) => {
   return (req, res, next) => {
-    const token = req.header("Authorization")?.replace("Bearer ", "");
-    
-    if (!token) {
-      return res.status(401).json({ message: "Access denied" });
-    }
-
     try {
-      const decoded = jwt.verify(token, "your_jwt_secret_key");
+      // Get token from header and validate format
+      const authHeader = req.header("Authorization");
+      if (!authHeader?.startsWith("Bearer ")) {
+        return res.status(401).json({ 
+          success: false, 
+          message: "Authorization header missing or invalid format" 
+        });
+      }
+
+      const token = authHeader.replace("Bearer ", "");
+      
+      // Verify token using environment variable secret
+      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+      
+      // Attach user info to request
       req.user = decoded;
 
-      // Check if the user has the required role
-      if (role && req.user.role !== role) {
-        return res.status(403).json({ message: "Forbidden" });
+      // Handle role-based access (support for multiple roles)
+      if (roles) {
+        const userRoles = Array.isArray(req.user.roles) 
+          ? req.user.roles 
+          : [req.user.role];
+          
+        const hasRequiredRole = Array.isArray(roles)
+          ? roles.some(role => userRoles.includes(role))
+          : userRoles.includes(roles);
+
+        if (!hasRequiredRole) {
+          return res.status(403).json({ 
+            success: false,
+            message: "Insufficient permissions" 
+          });
+        }
       }
 
       next();
-    } catch (err) {
-      return res.status(401).json({ message: "Invalid token" });
+    } catch (error) {
+      if (error instanceof jwt.TokenExpiredError) {
+        return res.status(401).json({ 
+          success: false, 
+          message: "Token expired" 
+        });
+      }
+      
+      return res.status(401).json({ 
+        success: false, 
+        message: "Invalid token" 
+      });
     }
   };
 };
